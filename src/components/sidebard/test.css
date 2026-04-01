@@ -1,0 +1,5 @@
+@media (max-width: 1080px) {
+  .doctor-sidebar {
+    min-height: auto;
+  }
+}

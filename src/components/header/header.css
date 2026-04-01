@@ -1,0 +1,376 @@
+header {
+    position: sticky;
+    top: 0;
+    right: 0;
+    z-index: 50;
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: flex-start;
+    transition: all .5s ease-in-out;
+    box-sizing: border-box;
+    /* padding: 5px; */
+    box-sizing: border-box;
+    height: 80px;
+}
+
+.scroll-color {
+    position: fixed;
+    top: 0px;
+    left: 5px;
+    right: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    align-self: center;
+    box-shadow: 0px 0px 3px gray;
+    z-index: 4;
+    width: 100%;
+    /* border-radius: .7em; */
+    background-color: rgba(245, 245, 245, 0.878);
+}
+
+.scroll-color nav ul li a {
+    /* color: var(--sec-color); */
+    font-weight: 500;
+}
+
+.scroll-color .line {
+    background-color: var(--sec-color);
+}
+
+nav {
+    width: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+nav ul {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+nav ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.line {
+    height: 1.5px;
+    width: 0px;
+    transition: all .3s ease;
+    background-color: var(--pri-color);
+}
+
+nav ul li:hover .line {
+    width: 100%;
+}
+
+nav ul li a {
+    color: var(--dark-mild);
+    color: black;
+    text-transform: capitalize;
+    font-size: .9rem;
+    text-decoration: none;
+    font-family: var(--font);
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.signup-btn {
+    padding: 7px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--sec-color);
+    color: var(--pri-color);
+    text-transform: capitalize;
+    border-radius: 0.5rem;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    font-weight: 400;
+    margin-top: 0px;
+    box-shadow: 0px 0px 0px;
+    border: 2px solid var(--sec-color);
+    font-size: .8em;
+}
+
+.signup-btn span {
+    font-size: 1.5em;
+}
+
+.signup-btnx {
+    padding: 7px 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: inherit;
+    /* color: var(--dark); */
+    text-transform: capitalize;
+    border-radius: 0.95rem;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    font-weight: 400;
+    margin-top: 0px;
+    box-shadow: 0px 0px 0px;
+    border: 0;
+    font-size: .8em;
+    border: 3px solid !important;
+    font-weight: 600;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    overflow-y: hidden;
+    box-sizing: border-box;
+}
+
+.logo {
+    object-fit: contain;
+    cursor: pointer;
+    width: 200px;
+    align-self: center;
+}
+
+.txtlogo {
+    height: 80px;
+    object-fit: contain;
+}
+
+.mobile-menu-container {
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 40px;
+    cursor: pointer;
+}
+
+.line1,
+.line2,
+.line3 {
+    width: 45%;
+    height: 2.2px;
+    background-color: rgb(175, 175, 175);
+    margin: 3px 0px;
+}
+
+.mobile-menu-container {
+    display: none;
+}
+
+.menu-modal {
+    display: none;
+}
+
+.spanxIcon {
+    font-size: 2em;
+    color: rgb(175, 175, 175);
+}
+
+.sign-up-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 25%;
+}
+
+@media (max-width: 1024px) {
+    .logo-container {
+        width: 30%;
+        padding-left: 0px;
+    }
+
+    nav ul {
+        width: 90%;
+    }
+}
+
+@media (max-width: 990px) and (min-width: 768px) {
+    header {
+        box-sizing: border-box;
+    }
+
+    .logo-container {
+        width: 30%;
+        padding-left: 0px;
+    }
+
+    .menu-container {
+        display: flex;
+    }
+
+    .menu-modal {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 0px;
+        overflow-y: hidden;
+        background-color: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        top: 80px;
+        left: 0;
+        transition: .3s all ease-in;
+        box-shadow: 0px 0px 3px #ddd;
+    }
+
+    .showing-modal {
+        height: 400px;
+        padding: 10px 20px 25px 20px;
+    }
+
+    .showing-modal ul a {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .menu-modal ul {
+        width: 100%;
+        /* height: 70%; */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .menu-modal ul a {
+        font-size: 1rem;
+        color: #3e3e3e;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-transform: capitalize;
+        margin: 5px 0px;
+        padding: 10px;
+        width: 100%;
+        text-align: left;
+        text-decoration: none;
+    }
+
+    .menu-modal ul a button {
+        width: 90%;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .sign-up-btn-container {
+        display: none;
+    }
+
+    .mobile-menu-container {
+        display: flex;
+        cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .menu-modal {
+        display: flex;
+        position: absolute;
+        width: 100% !important;
+        height: 0px;
+        overflow-y: hidden;
+        background-color: whitesmoke;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        top: 80px;
+        left: 0;
+        transition: .3s all ease-in;
+        box-shadow: 0px 0px 3px #ddd;
+    }
+
+    .showing-modal {
+        width: 100% !important;
+        height: 400px;
+        /* padding: 15px 20px 25px 20px; */
+        box-sizing: border-box;
+        overflow: hidden;
+        background-color: rgba(245, 245, 245, 0.989);
+    }
+
+    .showing-modal ul a {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .menu-modal ul {
+        width: 100% !important;
+        /* height: 70%; */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-start;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        box-sizing: border-box;
+    }
+
+    .menu-modal ul a {
+        font-size: 1rem;
+        color: #3e3e3e;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        text-transform: capitalize;
+        margin: 5px 0px;
+        padding: 10px;
+        width: 100%;
+        text-align: left;
+        text-decoration: none;
+        box-sizing: border-box;
+    }
+
+    .menu-modal ul a button {
+        width: 90%;
+    }
+
+
+    .sign-up-btn-container {
+        display: none;
+    }
+
+    .mobile-menu-container {
+        display: flex;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .logo-container {
+        width: 60%;
+        padding-left: 0px;
+        overflow-y: hidden;
+        overflow: hidden;
+    }
+
+    .logo-container img {
+        width: 85%;
+    }
+
+    .logo {
+        margin-top: 1px;
+        object-fit: cover;
+    }
+
+    header {
+        height: 80px;
+    }
+}

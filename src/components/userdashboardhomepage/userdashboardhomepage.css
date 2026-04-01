@@ -1,0 +1,549 @@
+.doctor-home {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 30px;
+  padding-top: 4px;
+}
+
+.doctor-mobile-intro {
+  padding: 18px 18px 4px;
+  /* border: 2px solid red; */
+}
+
+.doctor-mobile-intro span,
+.doctor-section-tag,
+.doctor-eyebrow {
+  display: block;
+  font-size: 0.676rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #5b8198;
+  margin-bottom: 8px;
+}
+
+.doctor-mobile-intro h2 {
+  margin: 8px 0 10px;
+  color: #0f2940;
+  font-size: 1.55rem;
+}
+
+.doctor-mobile-intro p,
+.doctor-panel-copy,
+.doctor-identity p,
+.doctor-empty-card p,
+.doctor-empty-state p {
+  margin: 0;
+  color: #5e7f92;
+  line-height: 1.7;
+  font-size: small;
+}
+
+.doctor-hero,
+.doctor-main-grid,
+.doctor-bottom-grid,
+.doctor-insights-grid,
+.doctor-mini-grid,
+.doctor-stack,
+.doctor-qualifications-grid,
+.doctor-placeholder-grid,
+.doctor-action-list,
+.doctor-schedule-board {
+  display: grid;
+  gap: 14px;
+}
+
+.doctor-hero-copy,
+.doctor-hero-card,
+.doctor-panel,
+.doctor-insight-card,
+.doctor-empty-state {
+  border-radius: 24px;
+  border: 1px solid rgba(16, 53, 78, 0.08);
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 18px 48px rgba(12, 40, 61, 0.08);
+}
+
+.doctor-hero-copy {
+  padding: 22px 18px;
+  background:
+    radial-gradient(circle at top left, #3b31c1, transparent 36%),
+    linear-gradient(145deg, #2c24a2 0%, #564DDF 60%, #574ddfae 100%);
+  color: #effaff;
+}
+
+.doctor-status-pill,
+.doctor-panel-chip,
+.doctor-empty-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.doctor-status-pill.pending {
+  background: rgba(255, 215, 0, 0.16);
+  color: #ffe28a;
+}
+
+.doctor-status-pill.verified {
+  background: rgba(108, 255, 196, 0.16);
+  color: #a1ffd6;
+}
+
+.doctor-status-pill.warning {
+  background: rgba(255, 145, 77, 0.18);
+  color: #ffd0b4;
+}
+
+.doctor-eyebrow {
+  margin: 16px 0 10px;
+  color: rgba(239, 250, 255, 0.66);
+}
+
+.doctor-hero-copy h1 {
+  margin: 0;
+  font-size: clamp(2rem, 10vw, 2.8rem);
+  font-size: 2.5em;
+  line-height: 1.02;
+}
+
+.doctor-subtitle {
+  margin: 12px 0 10px;
+  font-size: 0.698rem;
+  color: #b7e9f8;
+}
+
+.doctor-hero-text {
+  margin: 0;
+  line-height: 1.75;
+  color: rgba(239, 250, 255, 0.88);
+  font-size: small;
+}
+
+.doctor-hero-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 24px;
+}
+
+.doctor-primary-btn {
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: #f5fcff;
+  color: #08324e;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.doctor-primary-btn.subtle {
+  background: #edf7fb;
+  color: #154864;
+}
+
+.doctor-inline-metric {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #d2f7ff;
+  font-size: 0.92rem;
+}
+
+.doctor-hero-card,
+.doctor-panel,
+.doctor-empty-state {
+  padding: 18px;
+}
+
+.doctor-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.doctor-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 24px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #564DDF, #0f6f7f);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.doctor-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.doctor-identity h3,
+.doctor-panel h2,
+.doctor-focus-list h3,
+.doctor-empty-card h3,
+.doctor-empty-state h1,
+.doctor-placeholder-card strong {
+  margin: 0;
+}
+
+.doctor-identity p {
+  font-size: small;
+}
+
+.doctor-mini-grid article,
+.doctor-schedule-item,
+.doctor-focus-list article,
+.doctor-profile-list article,
+.doctor-qualifications-grid article,
+.doctor-bio-card,
+.doctor-placeholder-card,
+.doctor-action-card,
+.doctor-schedule-board-card {
+  padding: 16px;
+  border-radius: 20px;
+  background: #f3f8fb;
+  border: 1px solid rgba(17, 58, 84, 0.06);
+  box-sizing: border-box !important;
+}
+
+.doctor-mini-grid span,
+.doctor-profile-list article span,
+.doctor-qualifications-grid article span,
+.doctor-insight-card span {
+  display: block;
+  font-size: 0.84rem;
+  color: #628093;
+}
+
+.doctor-mini-grid strong,
+.doctor-profile-list article strong,
+.doctor-qualifications-grid article strong,
+.doctor-insight-card strong,
+.doctor-action-card strong,
+.doctor-schedule-board-card strong {
+  display: block;
+  margin-top: 8px;
+  line-height: 1.45;
+  color: #12334a;
+}
+
+.doctor-profile-list article {
+  flex-direction: column;
+}
+
+.doctor-profile-list article strong {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.doctor-insight-card {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.doctor-insight-card::after {
+  content: '';
+  position: absolute;
+  inset: auto -32px -32px auto;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  opacity: 0.16;
+}
+
+.doctor-insight-card.sea::after {
+  background: #14b8a6;
+}
+
+.doctor-insight-card.gold::after {
+  background: #f59e0b;
+}
+
+.doctor-insight-card.rose::after {
+  background: #fb7185;
+}
+
+.doctor-insight-card.sky::after {
+  background: #1fb6ff;
+}
+
+.doctor-insight-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  background: #edf7fb;
+  color: #0f5367;
+  font-size: 1.1rem;
+}
+
+.doctor-insight-card strong {
+  margin-top: 10px;
+  font-size: 1.45rem;
+}
+
+.doctor-insight-card p,
+.doctor-focus-list p,
+.doctor-bio-card p,
+.doctor-placeholder-card p {
+  margin: 10px 0 0;
+  color: #5e7f92;
+  line-height: 1.7;
+}
+
+.doctor-panel-head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.doctor-panel-chip {
+  background: #eef8fb;
+  color: #29536d;
+  border: 0;
+}
+
+.doctor-panel-chip.action {
+  cursor: pointer;
+}
+
+.doctor-schedule-list,
+.doctor-focus-list,
+.doctor-profile-list,
+.doctor-qualifications-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.doctor-schedule-item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.doctor-schedule-day span {
+  display: block;
+  color: #638299;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.doctor-schedule-day strong {
+  color: #16354d;
+}
+
+.doctor-schedule-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: white;
+  color: #24516b;
+  font-size: 0.85rem;
+}
+
+.doctor-focus-list article,
+.doctor-profile-list article {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.doctor-focus-icon,
+.doctor-action-card span {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: white;
+  color: #14526a;
+  flex-shrink: 0;
+}
+
+.doctor-action-list,
+.doctor-schedule-board,
+.doctor-placeholder-grid {
+  grid-template-columns: 1fr;
+}
+
+.doctor-action-card {
+  width: 100%;
+  border: 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f3f8fb;
+  cursor: pointer;
+}
+
+.doctor-action-card strong {
+  margin-top: 0;
+}
+
+.doctor-placeholder-card.emphasis {
+  background: linear-gradient(135deg, #113b58, #0d7282);
+  color: white;
+}
+
+.doctor-placeholder-card.emphasis p,
+.doctor-placeholder-card.emphasis strong {
+  color: white;
+}
+
+.doctor-schedule-board-card span,
+.doctor-schedule-board-card small {
+  color: #628093;
+}
+
+.doctor-bio-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.doctor-bio-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.doctor-bio-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: white;
+  color: #628093;
+}
+
+.doctor-empty-card,
+.doctor-empty-state {
+  padding: 22px 18px;
+}
+
+.doctor-empty-card.compact {
+  padding: 18px;
+}
+
+.doctor-empty-badge {
+  background: #eef8fb;
+  color: #24516b;
+}
+
+@media (min-width: 960px) {
+  .doctor-home {
+    gap: 24px;
+    padding-top: 8px;
+  }
+
+  .doctor-mobile-intro {
+    display: none;
+  }
+
+  .doctor-hero,
+  .doctor-main-grid,
+  .doctor-bottom-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.9fr);
+    gap: 20px;
+  }
+
+  .doctor-insights-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .doctor-mini-grid,
+  .doctor-qualifications-grid,
+  .doctor-schedule-board,
+  .doctor-placeholder-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .doctor-action-list {
+    grid-template-columns: 1fr;
+  }
+
+  .doctor-hero-copy {
+    padding: 32px;
+    border-radius: 28px;
+  }
+
+  .doctor-hero-card,
+  .doctor-panel,
+  .doctor-empty-state,
+  .doctor-insight-card {
+    padding: 24px;
+    border-radius: 28px;
+  }
+
+  .doctor-panel-head,
+  .doctor-schedule-item,
+  .doctor-hero-actions {
+    flex-direction: row;
+  }
+
+  .doctor-hero-actions {
+    align-items: center;
+  }
+
+  .doctor-primary-btn {
+    width: auto;
+  }
+
+  .doctor-schedule-item {
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .doctor-insight-card p,
+  .doctor-focus-list p,
+  .doctor-bio-card p,
+  .doctor-placeholder-card p {
+    font-size: x-small;
+    font-weight: 600;
+  }
+
+  .doctor-identity h3,
+  .doctor-panel h2,
+  .doctor-focus-list h3,
+  .doctor-empty-card h3,
+  .doctor-empty-state h1,
+  .doctor-placeholder-card strong {
+    margin: 0;
+    font-size: 1em;
+  }
+
+  .doctor-panel-head p {
+    font-size: x-small;
+  }
+
+}

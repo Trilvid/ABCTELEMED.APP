@@ -1,0 +1,32 @@
+.NOtfound {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.NOtfound span {
+    width: 60%;
+    text-align: center;
+    font-family: var(--font);
+    color: var(--sec-color);
+}
+
+.NOtfound span img {
+    width: 80%;
+    margin: auto;
+}
+
+@media (max-width: 768px) {
+    
+.NOtfound span {
+    width: 100%;
+    margin-top: 40px;
+
+}
+
+.NOtfound span img {
+    width: 100%;
+}
+}
