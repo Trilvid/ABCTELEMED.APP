@@ -950,7 +950,7 @@ export default function AdminDashboard() {
                     )}
                 </div>
 
-                <nav style={{ flex: 1, padding: '16px 12px', overflowY: 'auto' }}>
+                <nav style={{ flex: 1, padding: '16px 12px', overflowY: 'auto', display: 'flex', flexDirection: 'column', width: '100%' }}>
                     <p style={{ margin: '0 0 8px 8px', fontSize: '0.66rem', textTransform: 'uppercase', letterSpacing: '.14em', color: 'rgba(255,255,255,.3)', fontWeight: 700 }}>Navigation</p>
                     {NAV.filter(n => !n.superOnly || admin?.role === 'superAdmin').map(n => (
                         <button key={n.id} onClick={() => { setActive(n.id); setSideOpen(false); }}
@@ -976,8 +976,8 @@ export default function AdminDashboard() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                         <button onClick={() => setSideOpen(true)} style={{ width: 40, height: 40, borderRadius: 12, border: '1px solid rgba(20,48,74,.08)', background: 'white', display: 'grid', placeItems: 'center', cursor: 'pointer', color: '#14304a' }}><FiMenu /></button>
                         <div>
-                            <p style={{ margin: 0, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '.14em', color: '#4E7A91' }}>{heading.kicker}</p>
-                            <h1 style={{ margin: '2px 0 0', fontSize: '1.35rem', fontWeight: 800, color: '#0F2940' }}>{heading.title}</h1>
+                            <p className='smonwp' style={{ margin: 0, fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '.14em', color: '#4E7A91' }}>{heading.kicker}</p>
+                            <h1 className='smonwh1' style={{ margin: '2px 0 0', fontSize: '1.35rem', fontWeight: 800, color: '#0F2940' }}>{heading.title}</h1>
                         </div>
                     </div>
                     <div style={{ position: 'relative' }}>
@@ -987,7 +987,7 @@ export default function AdminDashboard() {
                             </div>
                             <div style={{ textAlign: 'left' }}>
                                 <p style={{ margin: 0, fontWeight: 600, color: '#0F2940', fontSize: '0.85rem' }}>{admin?.firstName} {admin?.lastName}</p>
-                                <p style={{ margin: 0, fontSize: '0.72rem', color: '#6B7280', textTransform: 'capitalize' }}>{admin?.role === 'superAdmin' ? 'Super Admin' : 'Admin'}</p>
+                                <p style={{ margin: 0, fontSize: '0.72rem', color: '#6B7280', textTransform: 'capitalize' }} className='rmwindow'>{admin?.role === 'superAdmin' ? 'Super Admin' : 'Admin'}</p>
                             </div>
                             <FiChevronDown size={14} style={{ color: '#9CA3AF' }} />
                         </button>

@@ -759,4 +759,19 @@ p {
     right: 0;
 
   }
+
+  .rmwindow {
+    display: none;
+  }
+
+  .smonwp {
+    font-size: x-small !important;
+    font-weight: 500 !important;
+    display: none;
+  }
+
+  .smonwh1 {
+    font-size: small !important;
+    font-weight: 600 !important;
+  }
 }
