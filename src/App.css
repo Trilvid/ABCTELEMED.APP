@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    touch-action: pan-y;
 }
 
 #root {
@@ -10,7 +11,16 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    touch-action: pan-y;
 }
+
+input[type='text'],
+input[type='number'],
+textarea,
+select {
+    font-size: 16px;
+}
+
 
 /* Target scrollbar for all elements */
 ::-webkit-scrollbar {
