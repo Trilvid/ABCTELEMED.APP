@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
 import "./onboardingStyle.css";
 
-// ─── CONFIG ────────────────────────────────────────────────────────────────────
+// ─── CONFIG ────
 
 const TOTAL_STEPS = 8;
 
@@ -44,7 +44,7 @@ const LANGUAGE_OPTIONS = [
 
 const DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
-// ─── ICONS (inline SVG, no deps) ───────────────────────────────────────────────
+// ─── ICONS (inline SVG, no deps) ────
 
 const Icon = {
     cross: (
@@ -92,7 +92,7 @@ const Icon = {
     ),
 };
 
-// ─── INITIAL STATE ──────────────────────────────────────────────────────────────
+// ─── INITIAL STATE ─────
 
 const INIT = {
     email: "", password: "", phone: "",
@@ -102,11 +102,27 @@ const INIT = {
     licenseNumber: "", licenseExpiry: "",
     availabilitySchedule: [],
     consultationFee: "", currency: "NGN",
+    certificateUrl: "",
 };
 
-// ─── MAIN COMPONENT ─────────────────────────────────────────────────────────────
 
-const Onboarding = ({ route = "" }) => {
+const uploadToCloudinary = async (file, type = 'photo') => {
+    const formData = new FormData();
+    formData.append(type === 'photo' ? 'photo' : 'document', file);
+    const endpoint = type === 'photo'
+        ? `${route}/api/upload/photo/public`
+        : `${route}/api/upload/document/public`;
+    const res = await fetch(endpoint, { method: 'POST', body: formData });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Upload failed');
+    return data.url; // Cloudinary URL
+};
+
+
+
+// ─── MAIN COMPONENT ───────
+
+const Onboarding = ({ route }) => {
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -115,7 +131,10 @@ const Onboarding = ({ route = "" }) => {
     const [formData, setFormData] = useState(INIT);
     const photoRef = useRef(null);
 
-    // ── Auto-save / restore ──────────────────────────────────────────────────────
+    const [uploadingPhoto, setUploadingPhoto] = useState(false);
+    const [uploadingCert, setUploadingCert] = useState(false);
+
+    // ── Auto-save / restore ──────
     useEffect(() => {
         const saved = localStorage.getItem("doctorOnboarding");
         if (saved) {
@@ -127,13 +146,13 @@ const Onboarding = ({ route = "" }) => {
         localStorage.setItem("doctorOnboarding", JSON.stringify(formData));
     }, [formData]);
 
-    // ── Helpers ──────────────────────────────────────────────────────────────────
+    // ── Helpers ──────
     const update = (field, value) =>
         setFormData(prev => ({ ...prev, [field]: value }));
 
     const progress = Math.round((step / TOTAL_STEPS) * 100);
 
-    // ── Validation ───────────────────────────────────────────────────────────────
+    // ── Validation ────
     const RULES = {
         1: { email: "required|email", password: "required|min:6", phone: "required" },
         2: { firstName: "required", lastName: "required" },
@@ -181,7 +200,7 @@ const Onboarding = ({ route = "" }) => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    // ── Field helpers ────────────────────────────────────────────────────────────
+    // ── Field helpers ────
     const field = (name, label, opts = {}) => (
         <div className="ob-field" key={name}>
             <label htmlFor={name}>
@@ -223,7 +242,7 @@ const Onboarding = ({ route = "" }) => {
         </div>
     );
 
-    // ── Photo upload ─────────────────────────────────────────────────────────────
+    // ── Photo upload ─────
     const handlePhoto = e => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -232,7 +251,7 @@ const Onboarding = ({ route = "" }) => {
         reader.readAsDataURL(file);
     };
 
-    // ── Language toggle ──────────────────────────────────────────────────────────
+    // ── Language toggle ────
     const toggleLang = lang => {
         const curr = formData.languages;
         if (curr.includes(lang))
@@ -241,7 +260,7 @@ const Onboarding = ({ route = "" }) => {
             update("languages", [...curr, lang]);
     };
 
-    // ── Qualification helpers ────────────────────────────────────────────────────
+    // ── Qualification helpers ───
     const updateQual = (i, key, val) => {
         const copy = formData.qualifications.map((q, idx) =>
             idx === i ? { ...q, [key]: val } : q
@@ -255,7 +274,7 @@ const Onboarding = ({ route = "" }) => {
     const removeQual = i =>
         update("qualifications", formData.qualifications.filter((_, idx) => idx !== i));
 
-    // ── Availability helpers ─────────────────────────────────────────────────────
+    // ── Availability helpers ────
     const updateSlot = (i, key, val) => {
         const copy = formData.availabilitySchedule.map((s, idx) =>
             idx === i ? { ...s, [key]: val } : s
@@ -273,7 +292,7 @@ const Onboarding = ({ route = "" }) => {
         update("availabilitySchedule", formData.availabilitySchedule.filter((_, idx) => idx !== i));
 
 
-    // ── Submit ───────────────────────────────────────────────────────────────────
+    // ── Submit ────
     const submit = async () => {
         setLoading(true);
         console.log("Submitting form data:", formData, "to endpoint:", `${route}/api/doctors/register`);
@@ -281,7 +300,13 @@ const Onboarding = ({ route = "" }) => {
             const res = await fetch(`${route}/api/doctors/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                // body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    certificateUrl: formData.certificateUrl || undefined,
+                    yearsOfExperience: Number(formData.yearsOfExperience),
+                    consultationFee: Number(formData.consultationFee) || 0,
+                }),
             });
             const data = await res.json();
             if (res.status === 201) {
@@ -296,7 +321,7 @@ const Onboarding = ({ route = "" }) => {
                     }));
                 }
                 localStorage.removeItem("doctorOnboarding");
-                navigate("/dashboard");
+                navigate("/login");
             } else {
                 swal.fire({
                     icon: "error",
@@ -314,7 +339,7 @@ const Onboarding = ({ route = "" }) => {
         setLoading(false);
     };
 
-    // ─── STEP PANELS ─────────────────────────────────────────────────────────────
+    // ─── STEP PANELS ───
 
     const renderAccountStep = () => (
         <>
@@ -331,25 +356,32 @@ const Onboarding = ({ route = "" }) => {
                 ref={photoRef}
                 type="file"
                 accept="image/*"
-                style={{ display: "none" }}
-                onChange={handlePhoto}
+                style={{ display: 'none' }}
+                onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    setUploadingPhoto(true);
+                    try {
+                        const url = await uploadToCloudinary(file, 'photo');
+                        update('photo', url);
+                    } catch (err) {
+                        alert('Photo upload failed: ' + err.message);
+                    } finally {
+                        setUploadingPhoto(false);
+                    }
+                }}
             />
-            <div
-                className="ob-photo-upload"
-                onClick={() => photoRef.current?.click()}
-                role="button"
-                tabIndex={0}
-                onKeyDown={e => e.key === "Enter" && photoRef.current?.click()}
-            >
+
+            {/* And update the photo preview area to show uploading state: */}
+            <div className="ob-photo-upload" onClick={() => photoRef.current?.click()}>
                 <div className="ob-photo-preview">
                     {formData.photo
-                        ? <img src={formData.photo} alt="preview" />
-                        : Icon.camera
-                    }
+                        ? <img src={formData.photo} alt="Preview" />
+                        : Icon.camera}
                 </div>
                 <div className="ob-photo-meta">
-                    <strong>{formData.photo ? "Change photo" : "Upload your photo"}</strong>
-                    <span>JPG or PNG · Max 5 MB</span>
+                    <strong>{uploadingPhoto ? 'Uploading…' : formData.photo ? 'Photo uploaded ✓' : 'Upload profile photo'}</strong>
+                    <span>JPG, PNG or WebP · max 5 MB</span>
                 </div>
             </div>
 
@@ -487,6 +519,58 @@ const Onboarding = ({ route = "" }) => {
                 required: true,
             })}
             {field("licenseExpiry", "Licence Expiry Date", { type: "date", required: true })}
+
+
+            {/* Certificate upload */}
+            <div className="ob-field">
+                <label>
+                    Medical certificate / MDCN license scan
+                    <span style={{ fontSize: '0.72rem', color: '#9CA3AF', marginLeft: 6 }}>(optional but recommended)</span>
+                </label>
+                <div
+                    className="ob-photo-upload"
+                    onClick={() => document.getElementById('cert-upload')?.click()}
+                    style={{ cursor: uploadingCert ? 'not-allowed' : 'pointer' }}
+                >
+                    <div className="ob-photo-preview">
+                        {formData.certificateUrl ? (
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#10B981" strokeWidth="2">
+                                <path d="M20 6 9 17l-5-5" />
+                            </svg>
+                        ) : (
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                            </svg>
+                        )}
+                    </div>
+                    <div className="ob-photo-meta">
+                        <strong>
+                            {uploadingCert ? 'Uploading…' : formData.certificateUrl ? 'Document uploaded ✓' : 'Upload certificate or license scan'}
+                        </strong>
+                        <span>PDF, JPG or PNG · max 10 MB</span>
+                    </div>
+                </div>
+                <input
+                    id="cert-upload"
+                    type="file"
+                    accept="image/*,application/pdf"
+                    style={{ display: 'none' }}
+                    onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        setUploadingCert(true);
+                        try {
+                            const url = await uploadToCloudinary(file, 'document');
+                            update('certificateUrl', url);
+                        } catch (err) {
+                            alert('Certificate upload failed: ' + err.message);
+                        } finally {
+                            setUploadingCert(false);
+                        }
+                    }}
+                />
+            </div>
         </>
     );
 

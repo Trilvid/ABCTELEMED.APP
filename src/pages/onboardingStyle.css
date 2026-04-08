@@ -668,4 +668,9 @@
     .ob-step-title {
         font-size: 1.5rem;
     }
+
+    .ob-btn-back {
+        padding: 10px 8px;
+        font-size: 0.82rem;
+    }
 }
