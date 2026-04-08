@@ -64,9 +64,12 @@ const Sidebar = ({ activeSection, onSelectSection, onClose }) => {
                 <button type="button" className="doctor-sidebar-close" onClick={onClose} aria-label="Close navigation">
                     <FiX />
                 </button>
-                <div className="doctor-sidebar-mark">A</div>
-                <div>
-                    <h2>AbcTeleMed</h2>
+                {/* <div className="doctor-sidebar-mark">A</div> */}
+                <div className="doctor-sidebar-mark">
+                    <img src="/logo.png" alt="ABC Telemedica Logo" />
+                </div>
+                <div className='vbrand'>
+                    <h2>ABC Telemedica</h2>
                     <p>Doctor workspace</p>
                 </div>
             </div>

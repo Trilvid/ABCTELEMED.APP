@@ -781,6 +781,22 @@ const Onboarding = ({ route = "" }) => {
                         )}
                     </div>
 
+                    {/* Login link */}
+                    <p style={{
+                        textAlign: 'center',
+                        marginTop: '24px',
+                        fontSize: '0.85rem',
+                        color: 'var(--soft)',
+                    }}>
+                        Already have an account?{' '}
+                        <span
+                            onClick={() => navigate('/login')}
+                            style={{ color: 'var(--teal)', fontWeight: 600, cursor: 'pointer' }}
+                        >
+                            Log in
+                        </span>
+                    </p>
+
                 </div>
             </main>
 

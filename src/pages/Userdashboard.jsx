@@ -3,7 +3,7 @@ import Userdashboardhomepage from '../components/userdashboardhomepage/Userdashb
 import Sidebar from '../components/sidebard/Sidebar';
 import SiderbadHead from '../components/sidebard/SiderbadHead';
 
-const Userdashboard = () => {
+const Userdashboard = ({ route }) => {
     const [activeSection, setActiveSection] = useState('overview');
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
@@ -30,6 +30,7 @@ const Userdashboard = () => {
                 <Userdashboardhomepage
                     activeSection={activeSection}
                     onSelectSection={handleSelectSection}
+                    route={route}
                 />
             </div>
 

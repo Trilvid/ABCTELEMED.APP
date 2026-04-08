@@ -87,10 +87,14 @@
   border-radius: 15px;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #1fb6ff, #14b8a6);
-  color: #05233f;
   font-weight: 800;
   font-size: 1.15rem;
+}
+
+.doctor-sidebar-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .doctor-sidebar-brand h2,
@@ -503,6 +507,25 @@
   .doctor-sidebar {
     min-height: calc(100vh - 48px);
     padding: 24px 20px;
+  }
+
+  .doctor-sidebar-brand {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .doctor-sidebar-brand button {
+    color: var(--dark-mild);
+    display: none;
+  }
+
+  .doctor-sidebar-brand div {
+    width: fit-content;
+    box-sizing: border-box !important;
+  }
+
+  .doctor-sidebar-brand div img {
+    width: 48px !important;
   }
 
 }

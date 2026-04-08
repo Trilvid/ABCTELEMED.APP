@@ -10,7 +10,7 @@ import { HiOutlineMenuAlt2 } from "react-icons/hi";
 const Header = () => {
     const [showModal, setShowModal] = useState(false)
     const [bgColor, setBgColor] = useState(false)
-    const [bgLogo, setBgLogo] = useState('/logo.svg')
+    const [bgLogo, setBgLogo] = useState('/logo.png')
 
     // 1. Create a function to handle the scrolling
     const scrollToSection = (sectionId) => {

@@ -10,7 +10,7 @@ export default function ScrollToTop() {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  useSimpleAutoLogout(5000)
+  useSimpleAutoLogout(60)
 
   return null;
 }
