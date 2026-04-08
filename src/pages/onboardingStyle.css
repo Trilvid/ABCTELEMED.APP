@@ -39,7 +39,6 @@
     display: flex;
     background: var(--bg);
     font-family: var(--font);
-    border: 2px solid red;
 }
 
 /* ===== STEP LIST ===== */
