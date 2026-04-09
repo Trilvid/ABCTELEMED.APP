@@ -15,7 +15,7 @@ import NotFound from './components/404/NotFound'
 function App() {
   const route = 'https://abctelemed.onrender.com'
   // const route = 'https://abctelemed-production.up.railway.app'
-  // const route = 'http://localhost:5000'
+  // const route = 'http://localhost:3000'
 
   return (
     <div className="App">

@@ -106,7 +106,7 @@ const INIT = {
 };
 
 
-const uploadToCloudinary = async (file, type = 'photo') => {
+const uploadToCloudinary = async (route, file, type = 'photo') => {
     const formData = new FormData();
     formData.append(type === 'photo' ? 'photo' : 'document', file);
     const endpoint = type === 'photo'
@@ -362,7 +362,7 @@ const Onboarding = ({ route }) => {
                     if (!file) return;
                     setUploadingPhoto(true);
                     try {
-                        const url = await uploadToCloudinary(file, 'photo');
+                        const url = await uploadToCloudinary(route, file, 'photo');
                         update('photo', url);
                     } catch (err) {
                         alert('Photo upload failed: ' + err.message);
@@ -561,7 +561,7 @@ const Onboarding = ({ route }) => {
                         if (!file) return;
                         setUploadingCert(true);
                         try {
-                            const url = await uploadToCloudinary(file, 'document');
+                            const url = await uploadToCloudinary(route, file, 'document');
                             update('certificateUrl', url);
                         } catch (err) {
                             alert('Certificate upload failed: ' + err.message);
