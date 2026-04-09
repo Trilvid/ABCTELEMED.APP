@@ -232,6 +232,149 @@ const EndConsultModal = ({ consultation, onClose, onDone, toast }) => {
 };
 
 // ── Main Component ─────────────────────────────────────────────────────────────
+const EarningsSection = ({ doctor, toast }) => {
+    const [earnings, setEarnings] = React.useState([]);
+    const [summary, setSummary] = React.useState(null);
+    const [withdrawals, setWithdrawals] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+    const [showForm, setShowForm] = React.useState(false);
+    const [bankForm, setBankForm] = React.useState({ bankName: '', accountNumber: '', accountName: '' });
+    const [submitting, setSubmitting] = React.useState(false);
+    const [errMsg, setErrMsg] = React.useState('');
+
+    React.useEffect(() => {
+        if (!doctor?.id) return;
+        setLoading(true);
+        Promise.all([
+            apiFetch('/api/doctors/earnings/summary'),
+            apiFetch('/api/doctors/withdrawals'),
+        ]).then(([sumRes, wdRes]) => {
+            setEarnings(sumRes.data?.earnings || []);
+            setSummary(sumRes.data?.summary);
+            setWithdrawals(wdRes.data?.withdrawals || []);
+        }).catch(() => { })
+            .finally(() => setLoading(false));
+    }, [doctor?.id]);
+
+    const requestWithdrawal = async () => {
+        if (!bankForm.bankName || !bankForm.accountNumber || !bankForm.accountName) {
+            setErrMsg('All bank fields are required.'); return;
+        }
+        setErrMsg(''); setSubmitting(true);
+        try {
+            await apiFetch('/api/doctors/withdraw', { method: 'POST', body: JSON.stringify(bankForm) });
+            toast.show('Withdrawal request submitted! Admin will process it shortly.');
+            setShowForm(false);
+        } catch (e) { setErrMsg(e.message); }
+        finally { setSubmitting(false); }
+    };
+
+    const inp = { width: '100%', padding: '10px 14px', borderRadius: 10, border: '1.5px solid #E5E7EB', fontFamily: 'inherit', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' };
+    const lbl = { display: 'block', fontSize: '0.76rem', fontWeight: 600, color: '#4B5563', marginBottom: 6 };
+    const fmtN = (n = 0) => `₦${Number(n).toLocaleString('en-NG')}`;
+
+    if (loading) return <div style={{ textAlign: 'center', padding: 40, color: '#9CA3AF' }}>Loading earnings…</div>;
+
+    return (
+        <section className="doctor-panel doctor-section-panel">
+            <div className="doctor-panel-head">
+                <div>
+                    <p className="doctor-section-tag">Finance</p>
+                    <h2>Your earnings & withdrawals</h2>
+                    <p className="doctor-panel-copy">Track what you've earned (85% of each consultation fee) and request payouts.</p>
+                </div>
+                {summary?.pending?.total > 0 && !showForm && (
+                    <button type="button" className="doctor-primary-btn" onClick={() => setShowForm(true)}>
+                        Request withdrawal
+                    </button>
+                )}
+            </div>
+
+            {/* Summary cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px,1fr))', gap: 12, marginBottom: 24 }}>
+                {[
+                    { label: 'Available to withdraw', value: fmtN(summary?.pending?.total), color: '#10B981', sub: `${summary?.pending?.count || 0} transaction(s)` },
+                    { label: 'Processing', value: fmtN(summary?.processing?.total), color: '#3B82F6', sub: `${summary?.processing?.count || 0} in progress` },
+                    { label: 'Total paid out', value: fmtN(summary?.paid?.total), color: '#6B7280', sub: `${summary?.paid?.count || 0} completed` },
+                ].map(card => (
+                    <div key={card.label} style={{ padding: 16, borderRadius: 16, background: '#F9FAFB', border: '1px solid #E5E7EB' }}>
+                        <p style={{ margin: '0 0 6px', fontSize: '0.72rem', color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '.08em' }}>{card.label}</p>
+                        <p style={{ margin: '0 0 4px', fontSize: '1.3rem', fontWeight: 800, color: card.color }}>{card.value}</p>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: '#9CA3AF' }}>{card.sub}</p>
+                    </div>
+                ))}
+            </div>
+
+            {/* Platform commission note */}
+            <div style={{ padding: '12px 16px', background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: 12, marginBottom: 20, fontSize: '0.82rem', color: '#1E40AF' }}>
+                💡 ABC Telemedica retains a <strong>15% platform commission</strong> on each consultation. You receive <strong>85%</strong> of every consultation fee.
+            </div>
+
+            {/* Withdrawal form */}
+            {showForm && (
+                <div style={{ padding: 20, borderRadius: 16, background: '#F0FDF4', border: '1px solid #BBF7D0', marginBottom: 24 }}>
+                    <h4 style={{ margin: '0 0 16px', color: '#166534' }}>Request withdrawal of {fmtN(summary?.pending?.total)}</h4>
+                    {errMsg && <p style={{ color: '#EF4444', fontSize: '0.82rem', marginBottom: 12 }}>{errMsg}</p>}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                        <div><label style={lbl}>Bank name</label><input style={inp} placeholder="e.g. GTBank, Access, Zenith" value={bankForm.bankName} onChange={e => setBankForm(f => ({ ...f, bankName: e.target.value }))} /></div>
+                        <div><label style={lbl}>Account number</label><input style={inp} placeholder="10-digit NUBAN" value={bankForm.accountNumber} onChange={e => setBankForm(f => ({ ...f, accountNumber: e.target.value }))} /></div>
+                        <div><label style={lbl}>Account name</label><input style={inp} placeholder="Exactly as it appears on the account" value={bankForm.accountName} onChange={e => setBankForm(f => ({ ...f, accountName: e.target.value }))} /></div>
+                    </div>
+                    <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
+                        <button onClick={() => setShowForm(false)} style={{ padding: '10px 20px', borderRadius: 10, border: '1.5px solid #E5E7EB', background: 'none', cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'inherit' }}>Cancel</button>
+                        <button onClick={requestWithdrawal} disabled={submitting} style={{ padding: '10px 24px', borderRadius: 10, border: 'none', background: '#10B981', color: 'white', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'inherit' }}>
+                            {submitting ? 'Submitting…' : 'Submit request'}
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Withdrawal history */}
+            {withdrawals.length > 0 && (
+                <div style={{ marginBottom: 24 }}>
+                    <h4 style={{ margin: '0 0 12px', color: '#0F2940' }}>Withdrawal requests</h4>
+                    {withdrawals.map(w => {
+                        const statusColor = { pending: '#F59E0B', processing: '#3B82F6', paid: '#10B981', rejected: '#EF4444' }[w.status] || '#6B7280';
+                        return (
+                            <div key={w._id} style={{ padding: 14, borderRadius: 12, background: '#F9FAFB', border: '1px solid #E5E7EB', marginBottom: 8, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+                                <div>
+                                    <p style={{ margin: '0 0 2px', fontWeight: 600, color: '#111827' }}>{fmtN(w.amount)}</p>
+                                    <p style={{ margin: 0, fontSize: '0.76rem', color: '#9CA3AF' }}>{w.bankName} • {w.accountNumber} • {new Date(w.createdAt).toLocaleDateString('en-NG')}</p>
+                                    {w.rejectionReason && <p style={{ margin: '4px 0 0', fontSize: '0.76rem', color: '#EF4444' }}>Reason: {w.rejectionReason}</p>}
+                                    {w.payoutReference && <p style={{ margin: '4px 0 0', fontSize: '0.76rem', color: '#10B981' }}>Ref: {w.payoutReference}</p>}
+                                </div>
+                                <span style={{ display: 'inline-flex', alignItems: 'center', padding: '4px 12px', borderRadius: 999, fontSize: '0.72rem', fontWeight: 700, background: `${statusColor}15`, color: statusColor }}>
+                                    {w.status.charAt(0).toUpperCase() + w.status.slice(1)}
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+
+            {/* Earnings list */}
+            <h4 style={{ margin: '0 0 12px', color: '#0F2940' }}>Earnings history</h4>
+            {earnings.length === 0 ? (
+                <div className="doctor-empty-card"><h3>No earnings yet</h3><p>Your earnings appear here after each paid consultation.</p></div>
+            ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {earnings.map(e => (
+                        <div key={e._id} style={{ padding: '12px 16px', borderRadius: 12, background: '#F9FAFB', border: '1px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+                            <div>
+                                <p style={{ margin: 0, fontWeight: 600, fontSize: '0.9rem', color: '#111827' }}>{fmtN(e.doctorAmount)} <span style={{ fontWeight: 400, color: '#9CA3AF', fontSize: '0.78rem' }}>({fmtN(e.grossAmount)} gross − {e.commissionRate}% commission)</span></p>
+                                <p style={{ margin: '2px 0 0', fontSize: '0.75rem', color: '#9CA3AF' }}>{new Date(e.createdAt).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                            </div>
+                            <span style={{ display: 'inline-flex', padding: '3px 10px', borderRadius: 999, fontSize: '0.72rem', fontWeight: 700, background: e.status === 'paid' ? '#D1FAE5' : e.status === 'processing' ? '#DBEAFE' : '#FEF3C7', color: e.status === 'paid' ? '#065F46' : e.status === 'processing' ? '#1E40AF' : '#92400E' }}>
+                                {e.status.charAt(0).toUpperCase() + e.status.slice(1)}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </section>
+    );
+};
+
 const Userdashboardhomepage = ({ activeSection = 'overview', onSelectSection }) => {
     const [doctor, setDoctor] = useState(getStoredDoctor);
     const [consultations, setConsultations] = useState([]);
@@ -870,150 +1013,7 @@ const Userdashboardhomepage = ({ activeSection = 'overview', onSelectSection }) 
         </section>
     );
 
-    const renderEarnings = () => {
-        // State local to the section
-        const [earnings, setEarnings] = React.useState([]);
-        const [summary, setSummary] = React.useState(null);
-        const [withdrawals, setWithdrawals] = React.useState([]);
-        const [loading, setLoading] = React.useState(true);
-        const [showForm, setShowForm] = React.useState(false);
-        const [bankForm, setBankForm] = React.useState({ bankName: '', accountNumber: '', accountName: '' });
-        const [submitting, setSubmitting] = React.useState(false);
-        const [errMsg, setErrMsg] = React.useState('');
-
-        React.useEffect(() => {
-            const id = doctor?.id;
-            if (!id) return;
-            setLoading(true);
-            Promise.all([
-                apiFetch('/api/doctors/earnings/summary'),
-                apiFetch('/api/doctors/withdrawals'),
-            ]).then(([sumRes, wdRes]) => {
-                setEarnings(sumRes.data?.earnings || []);
-                setSummary(sumRes.data?.summary);
-                setWithdrawals(wdRes.data?.withdrawals || []);
-            }).catch(() => { })
-                .finally(() => setLoading(false));
-        }, []);
-
-        const requestWithdrawal = async () => {
-            if (!bankForm.bankName || !bankForm.accountNumber || !bankForm.accountName) {
-                setErrMsg('All bank fields are required.'); return;
-            }
-            setErrMsg(''); setSubmitting(true);
-            try {
-                await apiFetch('/api/doctors/withdraw', { method: 'POST', body: JSON.stringify(bankForm) });
-                toast.show('Withdrawal request submitted! Admin will process it shortly.');
-                setShowForm(false);
-            } catch (e) { setErrMsg(e.message); }
-            finally { setSubmitting(false); }
-        };
-
-        const inp = { width: '100%', padding: '10px 14px', borderRadius: 10, border: '1.5px solid #E5E7EB', fontFamily: 'inherit', fontSize: '0.88rem', outline: 'none', boxSizing: 'border-box' };
-        const lbl = { display: 'block', fontSize: '0.76rem', fontWeight: 600, color: '#4B5563', marginBottom: 6 };
-        const fmt = (n = 0) => `₦${Number(n).toLocaleString('en-NG')}`;
-
-        if (loading) return <div style={{ textAlign: 'center', padding: 40, color: '#9CA3AF' }}>Loading earnings…</div>;
-
-        return (
-            <section className="doctor-panel doctor-section-panel">
-                <div className="doctor-panel-head">
-                    <div>
-                        <p className="doctor-section-tag">Finance</p>
-                        <h2>Your earnings & withdrawals</h2>
-                        <p className="doctor-panel-copy">Track what you've earned (85% of each consultation fee) and request payouts.</p>
-                    </div>
-                    {summary?.pending?.total > 0 && !showForm && (
-                        <button type="button" className="doctor-primary-btn" onClick={() => setShowForm(true)}>
-                            Request withdrawal
-                        </button>
-                    )}
-                </div>
-
-                {/* Summary cards */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px,1fr))', gap: 12, marginBottom: 24 }}>
-                    {[
-                        { label: 'Available to withdraw', value: fmt(summary?.pending?.total), color: '#10B981', sub: `${summary?.pending?.count || 0} transaction(s)` },
-                        { label: 'Processing', value: fmt(summary?.processing?.total), color: '#3B82F6', sub: `${summary?.processing?.count || 0} in progress` },
-                        { label: 'Total paid out', value: fmt(summary?.paid?.total), color: '#6B7280', sub: `${summary?.paid?.count || 0} completed` },
-                    ].map(card => (
-                        <div key={card.label} style={{ padding: 16, borderRadius: 16, background: '#F9FAFB', border: '1px solid #E5E7EB' }}>
-                            <p style={{ margin: '0 0 6px', fontSize: '0.72rem', color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '.08em' }}>{card.label}</p>
-                            <p style={{ margin: '0 0 4px', fontSize: '1.3rem', fontWeight: 800, color: card.color }}>{card.value}</p>
-                            <p style={{ margin: 0, fontSize: '0.74rem', color: '#9CA3AF' }}>{card.sub}</p>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Platform commission note */}
-                <div style={{ padding: '12px 16px', background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: 12, marginBottom: 20, fontSize: '0.82rem', color: '#1E40AF' }}>
-                    💡 ABC Telemedica retains a <strong>15% platform commission</strong> on each consultation. You receive <strong>85%</strong> of every consultation fee.
-                </div>
-
-                {/* Withdrawal form */}
-                {showForm && (
-                    <div style={{ padding: 20, borderRadius: 16, background: '#F0FDF4', border: '1px solid #BBF7D0', marginBottom: 24 }}>
-                        <h4 style={{ margin: '0 0 16px', color: '#166534' }}>Request withdrawal of {fmt(summary?.pending?.total)}</h4>
-                        {errMsg && <p style={{ color: '#EF4444', fontSize: '0.82rem', marginBottom: 12 }}>{errMsg}</p>}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                            <div><label style={lbl}>Bank name</label><input style={inp} placeholder="e.g. GTBank, Access, Zenith" value={bankForm.bankName} onChange={e => setBankForm(f => ({ ...f, bankName: e.target.value }))} /></div>
-                            <div><label style={lbl}>Account number</label><input style={inp} placeholder="10-digit NUBAN" value={bankForm.accountNumber} onChange={e => setBankForm(f => ({ ...f, accountNumber: e.target.value }))} /></div>
-                            <div><label style={lbl}>Account name</label><input style={inp} placeholder="Exactly as it appears on the account" value={bankForm.accountName} onChange={e => setBankForm(f => ({ ...f, accountName: e.target.value }))} /></div>
-                        </div>
-                        <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-                            <button onClick={() => setShowForm(false)} style={{ padding: '10px 20px', borderRadius: 10, border: '1.5px solid #E5E7EB', background: 'none', cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'inherit' }}>Cancel</button>
-                            <button onClick={requestWithdrawal} disabled={submitting} style={{ padding: '10px 24px', borderRadius: 10, border: 'none', background: '#10B981', color: 'white', fontWeight: 700, cursor: 'pointer', fontSize: '0.85rem', fontFamily: 'inherit' }}>
-                                {submitting ? 'Submitting…' : 'Submit request'}
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {/* Withdrawal history */}
-                {withdrawals.length > 0 && (
-                    <div style={{ marginBottom: 24 }}>
-                        <h4 style={{ margin: '0 0 12px', color: '#0F2940' }}>Withdrawal requests</h4>
-                        {withdrawals.map(w => {
-                            const statusColor = { pending: '#F59E0B', processing: '#3B82F6', paid: '#10B981', rejected: '#EF4444' }[w.status] || '#6B7280';
-                            return (
-                                <div key={w._id} style={{ padding: 14, borderRadius: 12, background: '#F9FAFB', border: '1px solid #E5E7EB', marginBottom: 8, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-                                    <div>
-                                        <p style={{ margin: '0 0 2px', fontWeight: 600, color: '#111827' }}>{fmt(w.amount)}</p>
-                                        <p style={{ margin: 0, fontSize: '0.76rem', color: '#9CA3AF' }}>{w.bankName} • {w.accountNumber} • {new Date(w.createdAt).toLocaleDateString('en-NG')}</p>
-                                        {w.rejectionReason && <p style={{ margin: '4px 0 0', fontSize: '0.76rem', color: '#EF4444' }}>Reason: {w.rejectionReason}</p>}
-                                        {w.payoutReference && <p style={{ margin: '4px 0 0', fontSize: '0.76rem', color: '#10B981' }}>Ref: {w.payoutReference}</p>}
-                                    </div>
-                                    <span style={{ display: 'inline-flex', alignItems: 'center', padding: '4px 12px', borderRadius: 999, fontSize: '0.72rem', fontWeight: 700, background: `${statusColor}15`, color: statusColor }}>
-                                        {w.status.charAt(0).toUpperCase() + w.status.slice(1)}
-                                    </span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
-
-                {/* Earnings list */}
-                <h4 style={{ margin: '0 0 12px', color: '#0F2940' }}>Earnings history</h4>
-                {earnings.length === 0 ? (
-                    <div className="doctor-empty-card"><h3>No earnings yet</h3><p>Your earnings appear here after each paid consultation.</p></div>
-                ) : (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        {earnings.map(e => (
-                            <div key={e._id} style={{ padding: '12px 16px', borderRadius: 12, background: '#F9FAFB', border: '1px solid #E5E7EB', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
-                                <div>
-                                    <p style={{ margin: 0, fontWeight: 600, fontSize: '0.9rem', color: '#111827' }}>{fmt(e.doctorAmount)} <span style={{ fontWeight: 400, color: '#9CA3AF', fontSize: '0.78rem' }}>({fmt(e.grossAmount)} gross − {e.commissionRate}% commission)</span></p>
-                                    <p style={{ margin: '2px 0 0', fontSize: '0.75rem', color: '#9CA3AF' }}>{new Date(e.createdAt).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-                                </div>
-                                <span style={{ display: 'inline-flex', padding: '3px 10px', borderRadius: 999, fontSize: '0.72rem', fontWeight: 700, background: e.status === 'paid' ? '#D1FAE5' : e.status === 'processing' ? '#DBEAFE' : '#FEF3C7', color: e.status === 'paid' ? '#065F46' : e.status === 'processing' ? '#1E40AF' : '#92400E' }}>
-                                    {e.status.charAt(0).toUpperCase() + e.status.slice(1)}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </section>
-        );
-    };
+    const renderEarnings = () => <EarningsSection doctor={doctor} toast={toast} />;
 
     const renderSection = () => {
         switch (activeSection) {
