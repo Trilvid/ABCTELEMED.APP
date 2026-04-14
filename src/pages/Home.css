@@ -296,8 +296,8 @@
 }
 
 .h-phone {
-    width: 295px;
-    background: #fff;
+    width: 315px;
+    background: #000000;
     border-radius: 36px;
     border: 8px solid #e8edf2;
     box-shadow: var(--shadow-md), 0 0 0 1px var(--border-teal);
@@ -347,6 +347,7 @@
 .h-wa-status {
     font-size: 0.68rem;
     color: rgba(255, 255, 255, 0.7);
+    text-align: left;
 }
 
 .h-wa-chat {
@@ -365,6 +366,7 @@
     font-size: 0.72rem;
     line-height: 1.5;
     color: #111;
+    text-align: left;
 }
 
 .h-wa-time {
@@ -938,7 +940,7 @@
     }
 
     .h-phone {
-        width: 260px;
+        width: 90%;
     }
 
     .h-footer-grid {
