@@ -9,12 +9,15 @@ import Userdashboard from './pages/Userdashboard';
 import ScrollToTop from './pages/ScrooltoTop';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
+import Home    from './pages/Home';
+import Privacy from './pages/Privacy';
+
 
 import NotFound from './components/404/NotFound'
 
 function App() {
-  const route = 'https://abctelemed.onrender.com'
-  // const route = 'https://abctelemed-production.up.railway.app'
+  // const route = 'https://abctelemed.onrender.com
+  const route = 'https://abctelemed-production.up.railway.app'
   // const route = 'http://localhost:3000'
 
   return (
@@ -22,7 +25,8 @@ function App() {
       <Router>
         <ScrollToTop />
         <Routes>
-          <Route path='/' element={<Login route={route} />} />
+          <Route path='/'        element={<Home />} />
+          <Route path='/privacy' element={<Privacy />} />
           <Route path='/login' element={<Login route={route} />} />
           <Route path='/auth-signup' element={<Register route={route} />} />
           <Route path='/ref_register/:ref' element={<Register route={route} />} />
