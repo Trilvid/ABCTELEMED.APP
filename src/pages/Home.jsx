@@ -109,15 +109,15 @@ const PLANS = [
         cycle: 'or ₦14,400 / year — save 20%',
         features: ['Everything in Basic', 'Instant doctor auto-assignment', 'Priority queue', 'On-call specialist access', 'Faster response times'],
         cta: 'Go Premium',
-        featured: true,
+        featured: false,
         badge: 'Most popular',
     },
 ];
 
 const FEATURES = [
-    { icon: <FiShield />, title: 'NDPC compliant', body: 'Your health data is handled in strict compliance with Nigeria\'s Data Protection Act. All records are encrypted and access-logged.' },
+    { icon: <FiShield />, title: 'NDPC compliant', body: 'Your health data is handled in strict compliance with Africa\'s Data Protection Act. All records are encrypted and access-logged.' },
     { icon: <FiUserCheck />, title: 'Verified doctors', body: 'Every doctor is manually verified — MDCN license checked, credentials confirmed, identity validated before they see a single patient.' },
-    { icon: <FiCreditCard />, title: 'Pay your way', body: 'Pay via USSD (dial a code), direct bank transfer, or card — all within your WhatsApp conversation. No third-party app needed.' },
+    { icon: <FiCreditCard />, title: 'Pay your way', body: 'Pay in Nigerian Naira or any other African currency via USSD (dial a code), direct bank transfer, or card — all within your WhatsApp conversation. No third-party app needed.' },
     { icon: <FiFileText />, title: 'Full medical history', body: 'Every consultation is stored — symptoms, diagnosis, prescriptions, follow-up dates. Always available on WhatsApp.' },
     { icon: <FiGlobe />, title: 'Works anywhere', body: 'No smartphone required for the basics. If you have WhatsApp, you have ABC Telemedica. Any device, any network.' },
     { icon: <FiCpu />, title: 'AI-powered triage', body: 'Claude AI routes you to the right specialist immediately — so doctors spend more time treating, less time asking questions.' },
@@ -161,14 +161,14 @@ export default function Home() {
                 <div>
                     <div className="h-eyebrow h-anim-1">
                         <span className="h-eyebrow-dot" />
-                        Available across Nigeria
+                        Available across Africa
                     </div>
                     <h1 className="h-title h-anim-2">
                         Quality healthcare,{' '}
                         <em>delivered on WhatsApp</em>
                     </h1>
                     <p className="h-sub h-anim-3">
-                        Describe your symptoms, get AI-powered triage, and connect with a verified Nigerian doctor — all without leaving your WhatsApp chat.
+                        Describe your symptoms, get AI-powered triage, and connect with a verified doctor all without leaving your WhatsApp chat.
                     </p>
                     <div className="h-actions h-anim-4">
                         <a href={WA_LINK} className="h-btn-primary" target="_blank" rel="noopener noreferrer">
@@ -185,7 +185,7 @@ export default function Home() {
                             <div className="h-trust-dot" />
                             <div className="h-trust-dot" />
                         </div>
-                        <span>Trusted by patients across Nigeria</span>
+                        <span>Trusted by patients across Africa</span>
                     </div>
                 </div>
 
@@ -244,7 +244,7 @@ export default function Home() {
             {/* ── FEATURES ── */}
             <section className="h-section" id="features" style={{ background: 'var(--surface-alt, #eef3f8)' }}>
                 <div className="h-tag">Platform features</div>
-                <h2 className="h-stitle">Built for Nigeria,<br />designed for everyone</h2>
+                <h2 className="h-stitle">Built for Africa,<br />designed for everyone</h2>
                 <div className="h-feats-grid">
                     {FEATURES.map((f) => (
                         <div className="h-feat-card" key={f.title}>
@@ -282,7 +282,7 @@ export default function Home() {
                 <div className="h-footer-grid">
                     <div>
                         <div className="h-footer-logo">ABC <span>Telemedica</span></div>
-                        <p className="h-footer-tagline">Quality healthcare, accessible to every Nigerian via WhatsApp.</p>
+                        <p className="h-footer-tagline">Quality healthcare, accessible to every African via WhatsApp.</p>
                     </div>
                     <div className="h-footer-col">
                         <h4>Platform</h4>
@@ -298,14 +298,14 @@ export default function Home() {
                     </div>
                     <div className="h-footer-col">
                         <h4>Contact</h4>
-                        <a href="mailto:support@abctelemedica.ng">support@abctelemedica.ng</a>
+                        <a href="mailto:support@abctelemedica.com">support@abctelemedica.com</a>
                         <a href={WA_LINK} target="_blank" rel="noopener noreferrer">WhatsApp us</a>
                     </div>
                 </div>
                 <div className="h-footer-bottom">
-                    <span>© {new Date().getFullYear()} ABC Telemedica. All rights reserved.</span>
+                    <span>© {new Date().getFullYear()} ABC InfoMed Tech. All rights reserved.</span>
                     <div className="h-ndpc-badge"><FiShield size={11} /> NDPC Compliant</div>
-                    <span>Built with care in Nigeria</span>
+                    <span>Built with care in Africa</span>
                 </div>
             </footer>
 
