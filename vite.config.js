@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api': "https://abctelemed-app.vercel.app",
+      '/api': "https://abctelemed-production.up.railway.app",
       // '/api': "http://localhost:5000"
     },
   },
