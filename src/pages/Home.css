@@ -933,6 +933,8 @@
 @media (max-width: 600px) {
     .h-hero {
         padding: 96px 5% 48px;
+        display: flex;
+        flex-direction: column-reverse;
     }
 
     .h-title {
