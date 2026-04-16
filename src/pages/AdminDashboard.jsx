@@ -9,7 +9,7 @@ import {
 } from 'react-icons/fi';
 
 // ── Config ──────
-const API_BASE = 'https://abctelemed.onrender.com';
+const API_BASE = 'https://abctelemed-production.up.railway.app';
 // const API_BASE = 'http://localhost:5000';
 
 const getToken = () => localStorage.getItem('adminToken');

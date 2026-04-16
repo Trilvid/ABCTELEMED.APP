@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE = 'https://abctelemed.onrender.com';
+const API_BASE = 'https://abctelemed-production.up.railway.app';
 
 export default function AdminLogin({ route }) {
     const navigate = useNavigate();

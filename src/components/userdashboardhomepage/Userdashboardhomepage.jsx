@@ -26,7 +26,7 @@ import {
 } from 'react-icons/fi';
 
 // ── API base — change this if you move servers ───
-const API_BASE = 'https://abctelemed.onrender.com';
+const API_BASE = 'https://abctelemed-production.up.railway.app';
 
 const getToken = () => localStorage.getItem('token');
 const getStoredDoctor = () => {

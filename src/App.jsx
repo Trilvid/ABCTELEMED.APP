@@ -16,7 +16,7 @@ import Privacy from './pages/Privacy';
 import NotFound from './components/404/NotFound'
 
 function App() {
-  // const route = 'https://abctelemed.onrender.com
+  // const route = 'https://abctelemed-production.up.railway.app
   const route = 'https://abctelemed-production.up.railway.app'
   // const route = 'http://localhost:3000'
 
