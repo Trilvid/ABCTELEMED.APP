@@ -83,35 +83,57 @@ const STEPS = [
     },
 ];
 
+// const PLANS = [
+//     {
+//         name: 'Free',
+//         price: '₦0',
+//         priceSub: 'forever',
+//         cycle: 'No subscription required',
+//         features: ['AI symptom analysis', 'Consultation history', 'Basic health guidance'],
+//         cta: 'Get started',
+//         featured: false,
+//     },
+//     {
+//         name: 'Basic',
+//         price: '₦750',
+//         priceSub: '/ month',
+//         cycle: 'or ₦6,000 / year — save 33%',
+//         features: ['Everything in Free', 'Unlimited doctor access', 'Consultation history archive', 'Doctor matching and booking'],
+//         cta: 'Subscribe',
+//         featured: false,
+//     },
+//     {
+//         name: 'Premium',
+//         price: '₦1,500',
+//         priceSub: '/ month',
+//         cycle: 'or ₦14,400 / year — save 20%',
+//         features: ['Everything in Basic', 'Instant doctor auto-assignment', 'Priority queue', 'On-call specialist access', 'Faster response times'],
+//         cta: 'Go Premium',
+//         featured: false,
+//         badge: 'Most popular',
+//     },
+// ];
+
+const TRIAL_END_DATE = 'May 14, 2026';
+
 const PLANS = [
-    {
-        name: 'Free',
-        price: '₦0',
-        priceSub: 'forever',
-        cycle: 'No subscription required',
-        features: ['AI symptom analysis', 'Consultation history', 'Basic health guidance'],
-        cta: 'Get started',
-        featured: false,
-    },
-    {
-        name: 'Basic',
-        price: '₦750',
-        priceSub: '/ month',
-        cycle: 'or ₦6,000 / year — save 33%',
-        features: ['Everything in Free', 'Unlimited doctor access', 'Consultation history archive', 'Doctor matching and booking'],
-        cta: 'Subscribe',
-        featured: false,
-    },
-    {
-        name: 'Premium',
-        price: '₦1,500',
-        priceSub: '/ month',
-        cycle: 'or ₦14,400 / year — save 20%',
-        features: ['Everything in Basic', 'Instant doctor auto-assignment', 'Priority queue', 'On-call specialist access', 'Faster response times'],
-        cta: 'Go Premium',
-        featured: false,
-        badge: 'Most popular',
-    },
+  {
+    name: 'Free',
+    price: '₦0',
+    priceSub: '',
+    cycle: `Full access free until ${TRIAL_END_DATE}`,
+    features: [
+      'AI symptom analysis',
+      'Unlimited doctor consultations',
+      'Instant doctor matching',
+      'Full consultation history',
+      'Prescriptions and follow-up notes',
+      'All 15+ medical specialties',
+    ],
+    cta: 'Start now — it\'s free',
+    featured: true,
+    badge: '1-month free trial',
+  },
 ];
 
 const FEATURES = [
@@ -212,7 +234,7 @@ export default function Home() {
             </section>
 
             {/* ── PLANS ── */}
-            <section className="h-section-surface" id="plans">
+            {/* <section className="h-section-surface" id="plans">
                 <div className="h-tag">Subscription plans</div>
                 <h2 className="h-stitle">Healthcare that fits your budget</h2>
                 <p className="h-ssub">Start free, upgrade anytime. All plans include AI symptom analysis.</p>
@@ -239,7 +261,73 @@ export default function Home() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
+
+
+      <section className="h-section-surface" id="plans">
+        <div className="h-tag">Free trial</div>
+        <h2 className="h-stitle">Completely free for one month</h2>
+        <p className="h-ssub">
+          We are giving every patient and doctor free access to the full platform so you
+          can experience the quality of care before subscriptions begin.
+        </p>
+
+        {/* Trial banner */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 14,
+          padding: '16px 24px', borderRadius: 16, marginTop: 36,
+          background: 'var(--teal-light)', border: '1.5px solid var(--border-teal)',
+        }}>
+          <FiCalendar size={20} style={{ color: 'var(--teal-dark)', flexShrink: 0 }} />
+          <div>
+            <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--navy)', marginBottom: 2 }}>
+              Trial period: now until {TRIAL_END_DATE}
+            </div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>
+              After the trial, plans start from ₦750/month. You will be notified before any charges apply.
+            </div>
+          </div>
+        </div>
+
+        {/* Single trial plan card */}
+        <div style={{ maxWidth: 440, margin: '32px auto 0' }}>
+          <div className="h-plan featured" style={{ textAlign: 'center' }}>
+            <div className="h-plan-badge" style={{ margin: '0 auto 18px' }}>
+              {PLANS[0].badge}
+            </div>
+            <div className="h-plan-name">{PLANS[0].name}</div>
+            <div className="h-plan-price" style={{ fontSize: '3rem', margin: '8px 0 4px' }}>
+              {PLANS[0].price}
+            </div>
+            <div className="h-plan-cycle">{PLANS[0].cycle}</div>
+            <ul className="h-plan-feats" style={{ textAlign: 'left', margin: '20px 0 24px' }}>
+              {PLANS[0].features.map((f) => (
+                <li key={f}>
+                  <FiCheckCircle
+                    size={14}
+                    style={{ color: 'var(--teal)', flexShrink: 0, marginTop: 2 }}
+                  />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={WA_LINK}
+              className="h-plan-cta"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ background: 'var(--teal)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+            >
+              <FaWhatsapp size={16} /> {PLANS[0].cta}
+            </a>
+          </div>
+        </div>
+
+        <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--muted)', marginTop: 20 }}>
+          No credit card required. No commitments during the trial.
+        </p>
+      </section>
+
 
             {/* ── FEATURES ── */}
             <section className="h-section" id="features" style={{ background: 'var(--surface-alt, #eef3f8)' }}>
