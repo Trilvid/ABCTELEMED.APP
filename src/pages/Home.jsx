@@ -281,7 +281,9 @@ export default function Home() {
           <FiCalendar size={20} style={{ color: 'var(--teal-dark)', flexShrink: 0 }} />
           <div>
             <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--navy)', marginBottom: 2 }}>
-              Trial period: now until {TRIAL_END_DATE}
+              {/* Trial period: now until {TRIAL_END_DATE} */}
+              the Trial period is now open for a full month 
+              {/* of free access to all features for both patients and doctors. */}
             </div>
             <div style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>
               After the trial, plans start from ₦750/month. You will be notified before any charges apply.
@@ -299,7 +301,7 @@ export default function Home() {
             <div className="h-plan-price" style={{ fontSize: '3rem', margin: '8px 0 4px' }}>
               {PLANS[0].price}
             </div>
-            <div className="h-plan-cycle">{PLANS[0].cycle}</div>
+            {/* <div className="h-plan-cycle">{PLANS[0].cycle}</div> */}
             <ul className="h-plan-feats" style={{ textAlign: 'left', margin: '20px 0 24px' }}>
               {PLANS[0].features.map((f) => (
                 <li key={f}>
