@@ -174,7 +174,8 @@ export default function Home() {
                     <Link to="/privacy">Privacy</Link>
                 </div>
                 <a href={WA_LINK} className="hn-cta" target="_blank" rel="noopener noreferrer">
-                    <FaWhatsapp size={16} /> Chat a doctor
+                    <FaWhatsapp size={16} /> Register Free Now
+                    {/* Chat a doctor */}
                 </a>
             </nav>
 
