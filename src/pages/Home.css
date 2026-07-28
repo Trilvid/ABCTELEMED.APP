@@ -220,6 +220,9 @@
 .h-wa-cta {
   display:inline-flex;align-items:center;gap:11px;padding:15px 30px;border-radius:999px;background:#111;color:#fff;font-weight:700;font-size:.97rem;text-decoration:none;box-shadow:0 8px 28px rgba(17,17,17,0.25);transition:transform .2s,box-shadow .2s;position:relative; border: none; cursor: pointer; font: inherit;
 }
+.h-wa-cta a{
+  display:inline-flex;align-items:center;gap:11px; color:#fff; text-decoration: none;
+}
 .h-wa-cta:hover { transform:translateY(-2px);box-shadow:0 14px 44px rgba(17,17,17,0.28); }
 .h-cta-art {
   min-height: 280px;

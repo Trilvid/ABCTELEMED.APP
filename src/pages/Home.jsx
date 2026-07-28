@@ -399,8 +399,8 @@ export default function Home() {
           <div className="h-cta-kicker">Doctor signup</div>
           <h2>Stay connected, let&apos;s do something great together.</h2>
           <p>Sign up in under 2 minutes and start matching patients through WhatsApp.</p>
-          <button className="h-wa-cta" type="button" onClick={() => setModalOpen(true)}>
-            <FaWhatsapp size={22} /> Doctor Signup
+          <button className="h-wa-cta" type="button">
+            <Link to="/login"><FaWhatsapp size={22} /> Doctor Signup</Link> 
           </button>
         </div>
         <div className="h-cta-art" aria-hidden="true">
