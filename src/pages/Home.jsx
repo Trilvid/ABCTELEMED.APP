@@ -315,8 +315,9 @@ export default function Home() {
           <button className="h-btn-primary" type="button" onClick={() => setModalOpen(true)}>
             <FaWhatsapp size={17} /> Register Now
           </button>
-          <button className="h-btn-ghost" type="button" onClick={() => setModalOpen(true)}>
+          <button className="h-btn-ghost" type="button" onClick={() => window.location.href = '/login'}>
             Doctor signup <FiArrowRight size={14} />
+            {/* <Link to="/login"><FaWhatsapp size={22} /> Doctor Signup</Link>  */}
           </button>
         </div>
 
